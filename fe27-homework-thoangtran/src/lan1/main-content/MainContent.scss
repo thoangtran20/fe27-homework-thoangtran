@@ -1,0 +1,17 @@
+.main-content {
+  box-sizing: border-box;
+
+  .content-header {
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #483838;
+    font-size: 40px;
+    text-align: center;
+    text-justify: 40px;
+  }
+  
+  .main-body {
+    display: flex;
+    justify-content: space-between;
+  }
+}

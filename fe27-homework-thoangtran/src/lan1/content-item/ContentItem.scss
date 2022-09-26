@@ -1,0 +1,28 @@
+.content-item {
+  border: 2px solid #716F81;
+  height: 100px;
+  border-radius: 10px;
+  position: relative;
+  margin-bottom: 20px;
+
+  .content-date {
+    margin-top: 0;
+  }
+
+  .content-date-label {
+    font-weight: 700;
+  }
+
+  .content-title {
+    margin-top: 10px;
+    font-weight: 500;
+  }
+
+  .icon-close {
+    position: absolute;
+    float: right;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+  }
+}
