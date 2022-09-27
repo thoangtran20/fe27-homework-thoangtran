@@ -13,46 +13,62 @@ function AddForm() {
   //   title: '',
   //   date: '',
   // })
-
-
+  
   const { set, get } = localStorageUtil(localStorageKey.contentItems, [])
 
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (!Validate()) {
+      return
+    }
     const newContent = {
       date,
       title,
       id: uuidv4(),
     }
     const oldList = JSON.parse(get())
+    console.log(oldList)
     set([newContent, ...oldList])
-    if(!Validate()) {
-      e.preventDefault();
-    };
   }
 
   const Validate = () => {
-    const title = document.getElementById('title').value;
+    const title = document.getElementById('title').value
     console.log(title)
-    const date = document.getElementById('date').value;
-    console.log(date);
-    const yesterday = new Date(date);
-    yesterday.setDate(yesterday.getDate() - 1)
+    const date = document.getElementById('date').value
+    const formatDate = date.toString().split('-')
+    formatDate.reverse()
+    const formatDateJoin = formatDate.join('/')
+    console.log(formatDateJoin)
+    const date_regex = /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/
+    let now_date = new Date()
+    let dd = String(now_date.getDate()).padStart(2, '0')
+    let mm = String(now_date.getMonth() + 1).padStart(2, '0')
+    let yyyy = now_date.getFullYear()
 
-    let valid = true;
-    if(title === '') {
-      alert('Bạn chưa nhập nội dung');
-      valid = false;
+    now_date = dd + '/' + mm + '/' + yyyy
+    console.log(now_date)
+    const formatNowDate = now_date.toString().split('-')
+    formatNowDate.reverse()
+    const formatNowDateJoin = formatDate.join('/')
+    console.log(formatNowDateJoin)
+
+    if (title === '') {
+      alert('Bạn chưa nhập nội dung')
+      return false
     }
-    if(date === '') {
-      alert('Bạn chưa nhập ngày nhắc');
-      valid= false;
+    if (formatDateJoin === '') {
+      alert('Bạn chưa nhập ngày nhắc')
+      return false
     }
-    if(date === yesterday) {
-      alert("Bạn không được nhập ngày quá khứ");
-      valid = false;
+    if (!date_regex.test(formatDateJoin)) {
+      alert('Bạn nhập ngày nhắc không hợp lệ')
+      return false
     }
-    return valid;
+    if (formatDateJoin < formatNowDateJoin) {
+      alert('Bạn không được nhập ngày quá khứ')
+      return false
+    }
+    return true
   }
 
   return (
