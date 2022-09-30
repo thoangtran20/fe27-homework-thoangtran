@@ -7,6 +7,8 @@ import './style.scss'
 function AddForm() {
   const [date, setDate] = useState()
   const [title, setTitle] = useState()
+  const [dateDanger, setDateDanger] = useState()
+  const [titleDanger, setTitleDanger] = useState()
 
   // const [contentItem, setContentItem] = useState({
   //   id: '',
@@ -32,42 +34,70 @@ function AddForm() {
   }
 
   const Validate = () => {
-    const title = document.getElementById('title').value
-    console.log(title)
-    const date = document.getElementById('date').value
-    const formatDate = date.toString().split('-')
-    formatDate.reverse()
-    const formatDateJoin = formatDate.join('/')
-    console.log(formatDateJoin)
+    // const title = document.getElementById('title').value
+    // console.log(title)
+    // const date = document.getElementById('date').value
+    // console.log(date)
+    console.log(title);
+    console.log(date)
+    let date_input = new Date(date);
+    
+    const time = date_input.getTime();
+    console.log(time);
+
+    let dd = String(date_input.getDate()).padStart(2, '0')
+    let mm = String(date_input.getMonth() + 1).padStart(2, '0')
+    let yyyy = date_input.getFullYear() 
+
+    date_input = dd + '/' + mm + '/' + yyyy;
+    console.log(date_input);
+
+    // const formatDate = date_input.toString().split('-')
+    // console.log(formatDate)
+    // formatDate.reverse()
+    // const formatDateJoin = formatDate.join('/')
+    // console.log(formatDateJoin)
+
     const date_regex = /^[0-9]{1,2}\/[0-9]{1,2}\/[0-9]{4}$/
+    
     let now_date = new Date()
-    let dd = String(now_date.getDate()).padStart(2, '0')
-    let mm = String(now_date.getMonth() + 1).padStart(2, '0')
-    let yyyy = now_date.getFullYear()
+    const time_now = now_date.getTime();
+    console.log(time_now)
 
-    now_date = dd + '/' + mm + '/' + yyyy
+    let dd_now = String(now_date.getDate()).padStart(2, '0')
+    console.log(dd_now);
+    let mm_now = String(now_date.getMonth() + 1).padStart(2, '0')
+    let yyyy_now = now_date.getFullYear()
+
+    now_date = dd_now + '/' + mm_now + '/' + yyyy_now
     console.log(now_date)
-    const formatNowDate = now_date.toString().split('-')
-    formatNowDate.reverse()
-    const formatNowDateJoin = formatDate.join('/')
-    console.log(formatNowDateJoin)
 
-    if (title === '') {
-      alert('Bạn chưa nhập nội dung')
+    // const formatNowDate = now_date.toString().split('-')
+    // console.log(formatNowDate)
+    // formatNowDate.reverse()
+    // const formatNowDateJoin = formatNowDate.join('/')
+    // console.log(formatNowDateJoin)
+
+    if (!title) {
+      setTitleDanger('Bạn chưa nhập nội dung')
       return false
     }
-    if (formatDateJoin === '') {
-      alert('Bạn chưa nhập ngày nhắc')
+    if (!date) {
+      setDateDanger('Bạn chưa nhập ngày nhắc')
       return false
     }
-    if (!date_regex.test(formatDateJoin)) {
+    if (!date_regex.test(date_input)) {
       alert('Bạn nhập ngày nhắc không hợp lệ')
       return false
     }
-    if (formatDateJoin < formatNowDateJoin) {
+    if (time < time_now) {
       alert('Bạn không được nhập ngày quá khứ')
       return false
     }
+    // if ((dd_now <= dd && dd <= dd_now) && (mm_now <= mm && mm <= mm_now) && (yyyy <= yyyy_now)) {
+    //   alert('Bạn không được nhập ngày quá khứ')
+    //   return false
+    // }
     return true
   }
 
@@ -104,6 +134,10 @@ function AddForm() {
           <button onClick={handleSubmit} className="btn-save">
             Lưu ngày
           </button>
+        </div>
+        <div className='form-danger'>
+          <span>{!title ? titleDanger: ""}</span>
+          <span>{!date ? dateDanger: ""}</span>
         </div>
       </form>
     </div>

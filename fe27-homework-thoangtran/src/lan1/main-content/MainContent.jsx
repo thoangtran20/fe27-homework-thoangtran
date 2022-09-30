@@ -4,6 +4,8 @@ import SideBar from '../side-bar/SideBar'
 import './MainContent.scss'
 
 function MainContent() {
+
+
   return (
     <div className="main-content">
       <Header />

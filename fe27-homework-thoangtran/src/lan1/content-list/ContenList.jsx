@@ -4,25 +4,16 @@ import { localStorageUtil } from '../../utils'
 import { ContentItem } from '../content-item/ContentItem'
 
 const ContentList = (props) => {
+  const { id } = props;
   const { get } = localStorageUtil(localStorageKey.contentItems, [])
   const [contentList, setContentList] = useState([])
-  const localStorageData = get()
 
   useEffect(() => {
     const list = JSON.parse(get())
-    // window.addEventListener('storage', function (e) {
-    //   console.log(list)
-    //   setContentList(list)
-    // })
-
     console.log(list)
     setContentList(list)
-  }, [])
-
-  useEffect(() => {
-    setContentList(JSON.parse(localStorageData))
-  }, [localStorageData])
-
+  }, [id])
+  
   return (
     <div className="content-list">
       {contentList.map((item, index) => {

@@ -63,4 +63,16 @@
     margin-right: 10px;
     color: #483838;
   }
+
+  .form-danger {
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0 0 100px;
+    color: #FF1E1E;
+    font-size: 14px;
+    float: left;
+    span {
+        font-weight: 500;
+    }
+  }
 }
